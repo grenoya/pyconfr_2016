@@ -1,0 +1,319 @@
+\documentclass[]{beamer}
+%% pdflatex -shell-escape leapseconds.tex
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{subfigure}
+\usepackage{minted}
+
+\graphicspath{{./images/}}
+\title[Python et leapseconds]{Python et les secondes intercalaires}
+\author{Claire Revillet}
+\date{16 oct 2016}
+\usetheme{Luebeck}
+
+%\AtBeginSection[]{
+%    \begin{frame}
+%        \tableofcontents[currentsection,hideothersubsections]
+%    \end{frame}
+%}
+
+\begin{document}
+
+\frame{\titlepage}
+%\begin{frame}
+%\tableofcontents[hideallsubsections]
+%\end{frame}
+
+%\section{Introduction}
+\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+\end{frame}
+
+\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+    \begin{center}
+        \begin{itemize}
+            \item 1 année = 1 révolution de la Terre autour du Soleil
+            \item 1 jour = 1 rotation de la Terre sur elle-même
+            \item<2-> depuis 1972 : UTC => 1 an = 365.2422 jours de 86400
+                secondes
+            \item<3-> définition de la seconde liée à la désintégration du Cs 133
+        \end{itemize}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+    \begin{center}
+        \begin{itemize}
+            \item 1 année = 1 révolution de la Terre autour du Soleil
+            \item 1 jour = 1 rotation de la Terre sur elle-même
+            \item depuis 1972 : UTC => 1 an = 365.2422 jours de 86400
+                secondes
+            \item définition de la seconde liée à la désintégration du Cs 133
+        \end{itemize}
+    \end{center}
+        => besoin de recaler l'UTC pour qu'il reste proche des définitions
+        astronomiques
+\end{frame}
+
+\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+    \begin{center}
+        \begin{itemize}
+            \item 1 année = 1 révolution de la Terre autour du Soleil
+            \item 1 jour = 1 rotation de la Terre sur elle-même
+            \item depuis 1972 : UTC => 1 an = 365.2422 jours de 86400
+                secondes
+            \item définition de la seconde liée à la désintégration du Cs 133
+        \end{itemize}
+    \end{center}
+        => besoin de recaler l'UTC pour qu'il reste proche des définitions
+        astronomiques
+
+        => ajout de secondes intercalaires \textbf{éventuellement} tous les 6
+        mois
+    \begin{block}<2->{Autres noms}
+        leapsecond, saut de seconde, saut de TUC, ...
+    \end{block}
+\end{frame}
+
+%\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+%    \begin{center}
+%        Qu'est-ce qu'une année ?
+%        \begin{itemize}
+%            \item<2-> 1 an = 365 jours
+%            \item<3-> 1 an = 365.25 jours
+%        \end{itemize}
+%    \end{center}
+%\end{frame}
+%
+%\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+%    \begin{center}
+%        Qu'est-ce qu'une année ?
+%        \begin{itemize}
+%            \item 1 an = 365 jours
+%            \item 1 an = 365.25 jours
+%                => + 1 jour tous les 4 ans (environ)
+%            \item<2-> 1 an $\sim$ 365.25000001 jours
+%        \end{itemize}
+%    \end{center}
+%\end{frame}
+%
+%\begin{frame}[fragile]{"Secondes intercalaires" ?? késako ?}
+%    \begin{center}
+%        Qu'est-ce qu'une année ?
+%        \begin{itemize}
+%            \item 1 an = 365 jours
+%            \item 1 an = 365.25 jours
+%                => + 1 jour tous les 4 ans (environ)
+%            \item 1 an $\sim$ 365.25000001 jours
+%                => + 1 seconde \textbf{éventuellement} tous les 6 mois
+%        \end{itemize}
+%    \end{center}
+%\end{frame}
+%
+%\begin{frame}[fragile]{"seconde intercalaire" késako ?}
+%    \begin{center}
+%        Qu'est-ce qu'une année ?
+%        \begin{itemize}
+%            \item 1 an = 365 jours
+%            \item 1 an = 365.25 jours
+%                => + 1 jours tous les 4 ans (environ)
+%            \item 1 an = 365.25000001 jours
+%                => + 1 seconde \textbf{éventuellement} tous les 6 mois
+%        \end{itemize}
+%    \end{center}
+%    Seconde intercalaire, leapsecond (anglais), saut de TUC
+%\end{frame}
+
+\begin{frame}[fragile]{Secondes intercalaires}
+    \footnotesize{
+        \begin{verbatim}
+ Date(at 0h UTC)   Date(at 0h UTC)   Date(at 0h UTC)
+ ---------------   ---------------   ---------------
+ ...
+ 1972  Jan.  1     1980  Jan.  1     1993  Jul.  1
+ 1972  Jul.  1     1981  Jul.  1     1994  Jul.  1
+ 1973  Jan.  1     1982  Jul.  1     1996  Jan.  1
+ 1974  Jan.  1     1983  Jul.  1     1997  Jul.  1
+ 1975  Jan.  1     1985  Jul.  1     1999  Jan.  1
+ 1976  Jan.  1     1988  Jan.  1     2006  Jan.  1
+ 1977  Jan.  1     1990  Jan.  1     2009  Jan.  1
+ 1978  Jan.  1     1991  Jan.  1     2012  Jul   1
+ 1979  Jan.  1     1992  Jul.  1     2015  Jul   1
+
+                   2017  Jan   1
+ \end{verbatim}
+ }
+Source : IERS (International Earth Rotation and Reference
+Systems Service), fournit bulletins d'annonce, listes des sauts et ecarts.
+\end{frame}
+
+\begin{frame}[fragile]{Où trouver la liste ?}
+    \begin{itemize}
+        \item liste des dates : ftp://hpiers.obspm.fr/iers/bul/bulc/TimeSteps.history
+        \item liste des écarts : ftp://hpiers.obspm.fr/iers/bul/bulc/UTC-TAI.history
+        \item tzdata (http://stackoverflow.com/questions/19332902/extract-historic-leap-seconds-from-tzdata)
+        \item certaines librairies de format de fichiers : CDF (CDFLeapSeconds.txt)
+    \end{itemize}
+    \begin{alertblock}{Conseil}
+        Choisir 1 source quelque soit le langage : plus facile à maintenir !
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Comment ça se présente ?}
+    \begin{itemize}
+        \item prochaine seconde intercalaire : 31/12/2016 à 23h 59' 60''
+        \item<2-> Comment réagit datetime :
+            \footnotesize{\begin{minted}{python}
+>>> datetime(2016, 12, 31, 23, 59, 60)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: second must be in 0..59
+            \end{minted}
+        }
+        \item<3-> Comment réagit time :
+            \footnotesize{\begin{minted}{python}
+>>> time.strptime("2016-12-31T23:59:60Z", 
+                  "%Y-%m-%dT%H:%M:%SZ")
+time.struct_time(tm_year=2016, tm_mon=12, tm_mday=31, 
+                 tm_hour=23, tm_min=59, tm_sec=60, 
+                 tm_wday=5, tm_yday=366, tm_isdst=-1)
+            \end{minted}
+        }
+        \item<4-> https://bugs.python.org/issue23574 "datetime: support leap seconds"
+            (closed | wont fix)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Risquez-vous de recevoir/lire une telle date ?}
+\end{frame}
+
+\begin{frame}[fragile]{Risquez-vous de recevoir/lire une telle date ?}
+\footnotesize{\begin{minted}{python}
+>>> t = "2016-12-31T23:59:60Z"
+>>> try:
+...     dd = datetime.strptime(t, "%Y-%m-%dT%H:%M:%SZ")
+... except ValueError:
+...     tmp = time.strptime(t, "%Y-%m-%dT%H:%M:%SZ")
+...     dd = datetime.fromtimestamp(time.mktime(tmp))
+>>> dd
+datetime.datetime(2017, 1, 1, 0, 0)
+
+\end{minted}
+}
+\end{frame}
+
+\begin{frame}[fragile]{Risquez-vous de recevoir/lire une telle date ?}
+\footnotesize{\begin{minted}{python}
+>>> t = "2016-12-31T23:59:60Z"
+>>> try:
+...     dd = datetime.strptime(t, "%Y-%m-%dT%H:%M:%SZ")
+... except ValueError:
+...     tmp = time.strptime(t, "%Y-%m-%dT%H:%M:%SZ")
+...     dd = datetime.fromtimestamp(time.mktime(tmp))
+>>> dd
+datetime.datetime(2017, 1, 1, 0, 0)
+
+>>> time.mktime(time.strptime("2016-12-31T23:59:60Z",
+                              "%Y-%m-%dT%H:%M:%SZ"))
+1483225200.0
+>>> time.mktime(time.strptime("2017-01-01T00:00:00Z",
+                              "%Y-%m-%dT%H:%M:%SZ"))
+1483225200.0
+\end{minted}
+}
+\begin{block}<2->{}
+    Le code ne plantera pas \textbackslash o/
+    
+    => mais décalage d'1 seconde !!
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Avez-vous besoin de garder la date exacte ?}
+\end{frame}
+
+\begin{frame}[fragile]{Avez-vous besoin de garder la date exacte ?}
+    \begin{enumerate}
+        \item en utilisant datetime
+            \begin{itemize}
+                \item passer par time.mktime pour sécuriser la création du
+                    datetime
+                \item avoir un flag indiquant que \textbf{cette date} est
+                    erronée
+            \end{itemize}
+        \item en restant en struct\_time
+    \end{enumerate}
+    \begin{block}<2->{}
+        La date exacte est retrouvable. 
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Devez-vous écrire cette date dans un fichier/une base ?}
+\end{frame}
+
+\begin{frame}[fragile]{Devez-vous écrire cette date dans un fichier/une base ?}
+    \begin{center}
+        A gérer au cas par cas :
+        \begin{itemize}
+            \item<2-> ASCII : formatter la chaîne à la main (dans tous les cas ou
+                que cette date)
+            \item<3-> lib C + binding Python utilisant datetime : la lib accepte
+                peut-être la date en seconde, elle gère p-e les leapseconds, ...
+                à étudier
+            \item<4-> sinon : ... stocker la date erronée
+        \end{itemize}
+    \end{center}
+    \begin{block}<5->{}
+        Pas forcement possible...
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Avez-vous des calculs à faire autour du saut de TUC ?}
+\end{frame}
+
+\begin{frame}[fragile]{Avez-vous des calculs à faire autour du saut de TUC ?}
+    \begin{enumerate}
+        \item en utilisant datetime
+            \begin{itemize}
+                \item il faut avoir la liste des leapseconds ...
+                \item ... et corriger tous les calculs chevauchant une
+                    leapsecond (+ aspirine)
+            \end{itemize}
+        \item<2-> en utilisant time.mktime
+            \begin{itemize}
+                \item Corriger toutes les dates après le saut de TUC (+1 sec)
+                \item puis faire les calculs
+            \end{itemize}
+    \end{enumerate}
+    \begin{block}<3->{}
+        Pas infaisable, mais demandera de la concentration.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Vos sources de données sont-elles synchrones ?}
+\end{frame}
+
+\begin{frame}[fragile]{Vos sources de données sont-elles synchrones ?}
+    \begin{center}
+        \Huge{:)}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Vos sources de données sont-elles synchrones ?}
+    \begin{center}
+        \Huge{:)\\ Allez réveillonner !!}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Morale de l'histoire...}
+    \begin{center}
+        \huge{Une petite seconde tous les 18 mois va vous faire perdre le sommeil
+        pour des semaines !!}
+    \end{center}
+\end{frame}
+
+\end{document}
